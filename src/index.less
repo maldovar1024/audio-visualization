@@ -1,12 +1,21 @@
+@content-width: 1320px;
+
+#root {
+  min-width: @content-width + 2 * 24px;
+}
+
 header {
   height: 48px;
+  width: @content-width;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 main {
-  padding: 20px;
+  margin: 0 auto;
+  width: @content-width;
 
   .wave {
     margin-bottom: 32px;
