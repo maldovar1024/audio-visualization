@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import React, { Component } from 'react';
 import AudioUpload from './component/audio-upload';
+import FrequencyCanvas from './component/freq-canvas';
 import WaveCanvas from './component/wave-canvas';
 
 interface AppState {
@@ -12,6 +13,7 @@ class App extends Component<unknown, AppState> {
   private ctx = new AudioContext();
   private source = this.ctx.createBufferSource();
   private timeAnalyser = this.ctx.createAnalyser();
+  private frequencyAnalyser = this.ctx.createAnalyser();
 
   constructor(props: unknown) {
     super(props);
@@ -21,7 +23,9 @@ class App extends Component<unknown, AppState> {
     };
 
     this.timeAnalyser.fftSize = 256;
+    this.frequencyAnalyser.fftSize = 256;
     this.source.connect(this.timeAnalyser);
+    this.source.connect(this.frequencyAnalyser);
     this.source.connect(this.ctx.destination);
   }
 
@@ -50,6 +54,7 @@ class App extends Component<unknown, AppState> {
           {isPlaying ? '暂停' : '播放'}
         </Button>
         <WaveCanvas play={isPlaying} analyser={this.timeAnalyser} />
+        <FrequencyCanvas play={isPlaying} analyser={this.frequencyAnalyser} />
       </div>
     );
   }
