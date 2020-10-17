@@ -10,10 +10,12 @@ interface AudioUploadProps {
 
 const AudioUpload: FC<AudioUploadProps> = props => {
   const [loading, setLoading] = useState(false);
+  const [filename, setFilename] = useState('');
 
   const disabled = props.disabled || loading;
 
   const handleUpload = (file: RcFile) => {
+    setFilename(file.name);
     const reader = new FileReader();
     reader.onload = () => {
       const buffer = reader.result as ArrayBuffer;
@@ -25,20 +27,23 @@ const AudioUpload: FC<AudioUploadProps> = props => {
   };
 
   return (
-    <Tooltip title="上传音频文件" placement="bottom">
-      <Upload
-        accept="audio/*"
-        beforeUpload={handleUpload}
-        showUploadList={false}
-        disabled={disabled}
-      >
-        <Button
-          icon={loading ? <LoadingOutlined /> : <UploadOutlined />}
+    <div>
+      <Tooltip title="上传音频文件" placement="bottom">
+        <Upload
+          accept="audio/*"
+          beforeUpload={handleUpload}
+          showUploadList={false}
           disabled={disabled}
-          onClick={() => setLoading(true)}
-        />
-      </Upload>
-    </Tooltip>
+        >
+          <Button
+            icon={loading ? <LoadingOutlined /> : <UploadOutlined />}
+            disabled={disabled}
+            onClick={() => setLoading(true)}
+          />
+        </Upload>
+      </Tooltip>
+      <span className="filename">{filename}</span>
+    </div>
   );
 };
 
