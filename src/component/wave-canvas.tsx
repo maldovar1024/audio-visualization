@@ -1,40 +1,9 @@
 import React, { Component, createRef } from 'react';
+import { drawWave } from '../utils/draw';
 
 interface WaveCanvasProps {
   analyser: AnalyserNode;
   play: boolean;
-}
-
-function drawWave(
-  ctx: CanvasRenderingContext2D,
-  canvas: { width: number; height: number },
-  dataBuffer: Uint8Array[]
-) {
-  const bufferLength = dataBuffer[0].length;
-  ctx.fillStyle = 'rgb(200, 200, 200)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.lineWidth = 1;
-  ctx.strokeStyle = 'rgb(0, 0, 0)';
-
-  const sliceWidth = (canvas.width * 1.0) / (dataBuffer.length * bufferLength);
-  let x = 0;
-
-  ctx.beginPath();
-  for (const data of dataBuffer) {
-    for (let i = 0; i < bufferLength; i++) {
-      const v = data[i] / 128.0;
-      const y = (v * canvas.height) / 2;
-
-      if (x === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-
-      x += sliceWidth;
-    }
-  }
-
-  ctx.lineTo(canvas.width, canvas.height / 2);
-  ctx.stroke();
 }
 
 class WaveCanvas extends Component<WaveCanvasProps> {
