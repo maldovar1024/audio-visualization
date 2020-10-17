@@ -2,6 +2,7 @@ import { Button, message, Tooltip, Upload } from 'antd';
 import { LoadingOutlined, UploadOutlined } from '@ant-design/icons';
 import { RcFile } from 'antd/lib/upload/interface';
 import React, { FC, useState } from 'react';
+import './audio-upload.less';
 
 interface AudioUploadProps {
   disabled: boolean;
@@ -32,7 +33,7 @@ const AudioUpload: FC<AudioUploadProps> = props => {
   };
 
   return (
-    <div>
+    <div className="upload">
       <Tooltip title="上传音频文件" placement="bottom">
         <Upload
           accept="audio/*"
