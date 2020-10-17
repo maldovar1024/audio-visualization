@@ -10,6 +10,8 @@ class FrequencyCanvas extends Component<FrequencyCanvasProps> {
   private ref = createRef<HTMLCanvasElement>();
   private dataBuffer: Uint8Array;
   private drawHandler: number | null = null;
+  private width = 1320;
+  private height = 400;
 
   constructor(props: FrequencyCanvasProps) {
     super(props);
@@ -42,7 +44,15 @@ class FrequencyCanvas extends Component<FrequencyCanvasProps> {
   }
 
   render() {
-    return <canvas className="frequency" ref={this.ref}></canvas>;
+    const { width, height } = this;
+    return (
+      <canvas
+        className="frequency"
+        ref={this.ref}
+        width={width}
+        height={height}
+      ></canvas>
+    );
   }
 }
 

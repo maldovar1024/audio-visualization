@@ -10,6 +10,8 @@ class WaveCanvas extends Component<WaveCanvasProps> {
   private ref = createRef<HTMLCanvasElement>();
   private dataBuffer = new Array<Uint8Array>(30);
   private drawHandler: number | null = null;
+  private width = 1320;
+  private height = 200;
 
   constructor(props: WaveCanvasProps) {
     super(props);
@@ -49,7 +51,15 @@ class WaveCanvas extends Component<WaveCanvasProps> {
   }
 
   render() {
-    return <canvas className="wave" ref={this.ref}></canvas>;
+    const { width, height } = this;
+    return (
+      <canvas
+        className="wave"
+        ref={this.ref}
+        width={width}
+        height={height}
+      ></canvas>
+    );
   }
 }
 
