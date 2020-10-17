@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { drawFrequencyHistogram } from '../utils';
+import { drawFrequencyHistogram, getCanvasAndContext } from '../utils';
 
 interface FrequencyCanvasProps {
   analyser: AnalyserNode;
@@ -23,10 +23,10 @@ class FrequencyCanvas extends Component<FrequencyCanvasProps> {
 
     if (prevProps.play !== play) {
       if (play) {
-        const canvas = this.ref.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
+        const result = getCanvasAndContext(this.ref);
+        if (!result) return;
+
+        const { canvas, ctx } = result;
 
         const draw = () => {
           this.props.analyser.getByteFrequencyData(this.dataBuffer);

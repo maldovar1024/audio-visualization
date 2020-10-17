@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { drawWave } from '../utils';
+import { drawWave, getCanvasAndContext } from '../utils';
 
 interface WaveCanvasProps {
   analyser: AnalyserNode;
@@ -26,10 +26,10 @@ class WaveCanvas extends Component<WaveCanvasProps> {
 
     if (prevProps.play !== play) {
       if (play) {
-        const canvas = this.ref.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
+        const result = getCanvasAndContext(this.ref);
+        if (!result) return;
+
+        const { canvas, ctx } = result;
 
         const draw = () => {
           const bufferLength = this.props.analyser.frequencyBinCount;
