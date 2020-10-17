@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { drawFrequencyHistogram } from '../utils/draw';
+import { drawFrequencyHistogram } from '../utils';
 
 interface FrequencyCanvasProps {
   analyser: AnalyserNode;

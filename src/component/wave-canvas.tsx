@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { drawWave } from '../utils/draw';
+import { drawWave } from '../utils';
 
 interface WaveCanvasProps {
   analyser: AnalyserNode;
