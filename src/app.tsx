@@ -1,3 +1,4 @@
+import { PauseCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import React, { Component } from 'react';
 import AudioUpload from './component/audio-upload';
@@ -51,9 +52,11 @@ class App extends Component<unknown, AppState> {
       <>
         <header>
           <AudioUpload readAudioData={this.readAudioData} />
-          <Button disabled={!canPlay} onClick={this.handleControlClick}>
-            {isPlaying ? '暂停' : '播放'}
-          </Button>
+          <Button
+            disabled={!canPlay}
+            onClick={this.handleControlClick}
+            icon={isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+          />
         </header>
         <main>
           <WaveCanvas play={isPlaying} analyser={this.timeAnalyser} />
