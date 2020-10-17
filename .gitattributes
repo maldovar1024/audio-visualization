@@ -1,0 +1,5 @@
+# .gitattributes
+* text=auto
+* text eol=lf
+*.ico binary
+*.png binary

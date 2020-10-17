@@ -1,0 +1,17 @@
+:root {
+  --scrollbar-width: 10px;
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(50, 50, 50, .3);
+  border-radius: calc(var(--scrollbar-width) / 2);
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(50, 50, 50, .1);
+}
