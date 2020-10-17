@@ -51,7 +51,10 @@ class App extends Component<unknown, AppState> {
     return (
       <>
         <header>
-          <AudioUpload readAudioData={this.readAudioData} />
+          <AudioUpload
+            disabled={isPlaying}
+            readAudioData={this.readAudioData}
+          />
           <Button
             disabled={!canPlay}
             onClick={this.handleControlClick}
