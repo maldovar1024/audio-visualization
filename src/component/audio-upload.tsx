@@ -1,4 +1,4 @@
-import { Button, Tooltip, Upload } from 'antd';
+import { Button, message, Tooltip, Upload } from 'antd';
 import { LoadingOutlined, UploadOutlined } from '@ant-design/icons';
 import { RcFile } from 'antd/lib/upload/interface';
 import React, { FC, useState } from 'react';
@@ -15,14 +15,19 @@ const AudioUpload: FC<AudioUploadProps> = props => {
   const disabled = props.disabled || loading;
 
   const handleUpload = (file: RcFile) => {
-    setFilename(file.name);
-    const reader = new FileReader();
-    reader.onload = () => {
-      const buffer = reader.result as ArrayBuffer;
-      props.readAudioData(buffer);
+    if (!file.type.startsWith('audio/')) {
+      message.error('文件类型错误', 1);
       setLoading(false);
-    };
-    reader.readAsArrayBuffer(file);
+    } else {
+      setFilename(file.name);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const buffer = reader.result as ArrayBuffer;
+        props.readAudioData(buffer);
+        setLoading(false);
+      };
+      reader.readAsArrayBuffer(file);
+    }
     return false;
   };
 
