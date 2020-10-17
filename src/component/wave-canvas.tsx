@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { drawWave, getCanvasAndContext } from '../utils';
+import { drawWave, getCanvasAndContext, resetWaveCanvas } from '../utils';
 
 interface WaveCanvasProps {
   analyser: AnalyserNode;
@@ -19,6 +19,18 @@ class WaveCanvas extends Component<WaveCanvasProps> {
       this.dataBuffer[i] = new Uint8Array(props.analyser.frequencyBinCount);
       this.dataBuffer[i].fill(128);
     }
+  }
+
+  private reset() {
+    const result = getCanvasAndContext(this.ref);
+    if (!result) return;
+
+    const { canvas, ctx } = result;
+    resetWaveCanvas(ctx, canvas);
+  }
+
+  componentDidMount() {
+    this.reset();
   }
 
   componentDidUpdate(prevProps: WaveCanvasProps) {
@@ -45,6 +57,7 @@ class WaveCanvas extends Component<WaveCanvasProps> {
         this.drawHandler = window.requestAnimationFrame(draw);
       } else if (this.drawHandler) {
         window.cancelAnimationFrame(this.drawHandler);
+        this.reset();
         this.drawHandler = null;
       }
     }

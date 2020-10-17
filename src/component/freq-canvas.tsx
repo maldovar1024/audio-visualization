@@ -1,5 +1,9 @@
 import React, { Component, createRef } from 'react';
-import { drawFrequencyHistogram, getCanvasAndContext } from '../utils';
+import {
+  drawFrequencyHistogram,
+  getCanvasAndContext,
+  resetFrequencyCanvas,
+} from '../utils';
 
 interface FrequencyCanvasProps {
   analyser: AnalyserNode;
@@ -16,6 +20,18 @@ class FrequencyCanvas extends Component<FrequencyCanvasProps> {
   constructor(props: FrequencyCanvasProps) {
     super(props);
     this.dataBuffer = new Uint8Array(props.analyser.frequencyBinCount);
+  }
+
+  private reset() {
+    const result = getCanvasAndContext(this.ref);
+    if (!result) return;
+
+    const { canvas, ctx } = result;
+    resetFrequencyCanvas(ctx, canvas);
+  }
+
+  componentDidMount() {
+    this.reset();
   }
 
   componentDidUpdate(prevProps: FrequencyCanvasProps) {
@@ -38,6 +54,7 @@ class FrequencyCanvas extends Component<FrequencyCanvasProps> {
         this.drawHandler = window.requestAnimationFrame(draw);
       } else if (this.drawHandler) {
         window.cancelAnimationFrame(this.drawHandler);
+        this.reset();
         this.drawHandler = null;
       }
     }
