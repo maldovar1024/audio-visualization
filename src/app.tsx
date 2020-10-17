@@ -48,14 +48,18 @@ class App extends Component<unknown, AppState> {
   render() {
     const { isPlaying, canPlay } = this.state;
     return (
-      <div>
-        <AudioUpload readAudioData={this.readAudioData} />
-        <Button disabled={!canPlay} onClick={this.handleControlClick}>
-          {isPlaying ? '暂停' : '播放'}
-        </Button>
-        <WaveCanvas play={isPlaying} analyser={this.timeAnalyser} />
-        <FrequencyCanvas play={isPlaying} analyser={this.frequencyAnalyser} />
-      </div>
+      <>
+        <header>
+          <AudioUpload readAudioData={this.readAudioData} />
+          <Button disabled={!canPlay} onClick={this.handleControlClick}>
+            {isPlaying ? '暂停' : '播放'}
+          </Button>
+        </header>
+        <main>
+          <WaveCanvas play={isPlaying} analyser={this.timeAnalyser} />
+          <FrequencyCanvas play={isPlaying} analyser={this.frequencyAnalyser} />
+        </main>
+      </>
     );
   }
 }
