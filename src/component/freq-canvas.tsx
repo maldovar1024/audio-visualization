@@ -42,7 +42,7 @@ class FrequencyCanvas extends Component<FrequencyCanvasProps> {
   }
 
   render() {
-    return <canvas ref={this.ref} width={1200} height={400}></canvas>;
+    return <canvas className="frequency" ref={this.ref}></canvas>;
   }
 }
 

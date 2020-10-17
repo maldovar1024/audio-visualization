@@ -49,7 +49,7 @@ class WaveCanvas extends Component<WaveCanvasProps> {
   }
 
   render() {
-    return <canvas ref={this.ref} width={1200} height={200}></canvas>;
+    return <canvas className="wave" ref={this.ref}></canvas>;
   }
 }
 
