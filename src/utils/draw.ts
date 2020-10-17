@@ -39,7 +39,7 @@ export function drawFrequencyHistogram(
   dataBuffer: Uint8Array
 ) {
   const bufferLength = dataBuffer.length;
-  ctx.fillStyle = 'rgb(0, 0, 0)';
+  ctx.fillStyle = '#101010';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   const barWidth = (canvas.width / bufferLength) * 2.5;
@@ -48,7 +48,7 @@ export function drawFrequencyHistogram(
   for (let i = 0; i < bufferLength; i++) {
     const barHeight = dataBuffer[i];
 
-    ctx.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
+    ctx.fillStyle = `rgb(50, ${barHeight + 100}, 50)`;
     ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
 
     x += barWidth + 1;
