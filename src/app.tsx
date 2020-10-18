@@ -72,6 +72,7 @@ class App extends Component<unknown, AppState> {
             readAudioData={this.readAudioData}
           />
           <Button
+            className="control"
             disabled={audioBuffer === null}
             onClick={this.handleControlClick}
             icon={isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}

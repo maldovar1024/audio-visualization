@@ -18,7 +18,7 @@ canvas {
   display: block;
 }
 
-button.ant-btn:hover {
+button.ant-btn:hover, button.ant-btn:focus {
   color: aqua;
   border-color: aqua;
 }
