@@ -1,5 +1,5 @@
 import { PauseCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import React, { Component } from 'react';
 import AudioUpload from './component/audio-upload';
 import FrequencyCanvas from './component/freq-canvas';
@@ -7,12 +7,12 @@ import WaveCanvas from './component/wave-canvas';
 
 interface AppState {
   isPlaying: boolean;
-  canPlay: boolean;
+  audioBuffer: AudioBuffer | null;
 }
 
 class App extends Component<unknown, AppState> {
   private ctx = new AudioContext();
-  private source = this.ctx.createBufferSource();
+  private source: AudioBufferSourceNode | null = null;
   private timeAnalyser = this.ctx.createAnalyser();
   private frequencyAnalyser = this.ctx.createAnalyser();
 
@@ -20,34 +20,50 @@ class App extends Component<unknown, AppState> {
     super(props);
     this.state = {
       isPlaying: false,
-      canPlay: false,
+      audioBuffer: null,
     };
 
     this.timeAnalyser.fftSize = 256;
     this.frequencyAnalyser.fftSize = 256;
-    this.source.connect(this.timeAnalyser);
-    this.source.connect(this.frequencyAnalyser);
-    this.source.connect(this.ctx.destination);
   }
 
-  private readAudioData = async (buf: ArrayBuffer) => {
-    const audioBuffer = await this.ctx.decodeAudioData(buf);
-    this.source.buffer = audioBuffer;
-    this.setState({ canPlay: true });
+  private handlePlayEnd = () => {
+    this.setState({ isPlaying: false });
+    this.source = null;
   };
+
+  private readAudioData = async (buf: ArrayBuffer) => {
+    this.setState({ audioBuffer: null });
+    const audioBuffer = await this.ctx.decodeAudioData(buf);
+    this.setState({ audioBuffer });
+  };
+
+  private start() {
+    const { audioBuffer } = this.state;
+    if (audioBuffer !== null) {
+      this.source = this.ctx.createBufferSource();
+      this.source.onended = this.handlePlayEnd;
+      this.source.buffer = audioBuffer;
+      this.source.connect(this.timeAnalyser);
+      this.source.connect(this.frequencyAnalyser);
+      this.source.connect(this.ctx.destination);
+      this.source.start();
+      this.setState({ isPlaying: true });
+    } else {
+      message.error('没有可播放的音频文件', 1);
+    }
+  }
 
   private handleControlClick = () => {
     if (this.state.isPlaying) {
-      this.source.stop();
-      this.setState({ isPlaying: false });
+      this.source?.stop();
     } else {
-      this.source.start();
-      this.setState({ isPlaying: true });
+      this.start();
     }
   };
 
   render() {
-    const { isPlaying, canPlay } = this.state;
+    const { isPlaying, audioBuffer } = this.state;
     return (
       <>
         <header>
@@ -56,7 +72,7 @@ class App extends Component<unknown, AppState> {
             readAudioData={this.readAudioData}
           />
           <Button
-            disabled={!canPlay}
+            disabled={audioBuffer === null}
             onClick={this.handleControlClick}
             icon={isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
           />
