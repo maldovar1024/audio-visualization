@@ -8,10 +8,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(50, 50, 50, .3);
+  background-color: #c1c1c1;
   border-radius: calc(var(--scrollbar-width) / 2);
 }
 
 ::-webkit-scrollbar-track {
-  background-color: rgba(50, 50, 50, .1);
+  background-color: #f1f1f1;
 }
