@@ -15,7 +15,7 @@ class FrequencyCanvas extends Component<FrequencyCanvasProps> {
   private dataBuffer: Uint8Array;
   private drawHandler: number | null = null;
   private width = 1320;
-  private height = 400;
+  private height = 200;
 
   constructor(props: FrequencyCanvasProps) {
     super(props);
