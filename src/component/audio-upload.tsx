@@ -1,5 +1,5 @@
-import { Button, message, Tooltip, Upload } from 'antd';
-import { LoadingOutlined, UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
+import { Button, message, Upload } from 'antd';
 import { RcFile } from 'antd/lib/upload/interface';
 import React, { FC, useState } from 'react';
 import './audio-upload.less';
@@ -34,20 +34,22 @@ const AudioUpload: FC<AudioUploadProps> = props => {
 
   return (
     <div className="upload">
-      <Tooltip title="上传音频文件" placement="bottom">
-        <Upload
-          accept="audio/*"
-          beforeUpload={handleUpload}
-          showUploadList={false}
+      <Upload
+        accept="audio/*"
+        beforeUpload={handleUpload}
+        showUploadList={false}
+        disabled={disabled}
+      >
+        <Button
+          style={{ paddingLeft: 6, paddingRight: 6 }}
+          icon={<UploadOutlined />}
           disabled={disabled}
+          onClick={() => setLoading(true)}
+          loading={loading}
         >
-          <Button
-            icon={loading ? <LoadingOutlined /> : <UploadOutlined />}
-            disabled={disabled}
-            onClick={() => setLoading(true)}
-          />
-        </Upload>
-      </Tooltip>
+          上传音频文件
+        </Button>
+      </Upload>
       <span className="filename">{filename}</span>
     </div>
   );
