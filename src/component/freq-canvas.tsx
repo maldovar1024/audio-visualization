@@ -1,9 +1,16 @@
 import React, { Component, createRef } from 'react';
-import {
-  drawFrequencyHistogram,
-  getCanvasAndContext,
-  resetFrequencyCanvas,
-} from '../utils';
+import { getCanvasAndContext, resetFrequencyCanvas } from '../utils';
+
+let drawFrequency: (
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  data_buffer: Uint8Array
+) => void;
+
+import('../wasm').then(wasm => {
+  drawFrequency = wasm.draw_frequency;
+});
 
 interface FrequencyCanvasProps {
   analyser: AnalyserNode;
@@ -47,7 +54,7 @@ class FrequencyCanvas extends Component<FrequencyCanvasProps> {
         const draw = () => {
           this.props.analyser.getByteFrequencyData(this.dataBuffer);
 
-          drawFrequencyHistogram(ctx, canvas, this.dataBuffer);
+          drawFrequency(ctx, canvas.width, canvas.height, this.dataBuffer);
           this.drawHandler = window.requestAnimationFrame(draw);
         };
 
