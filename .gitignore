@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# rust
+/crate/target
+
 # testing
 /coverage
 
