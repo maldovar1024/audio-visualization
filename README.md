@@ -98,8 +98,8 @@ Canvas API 的绘图 2D 绘图接口与其它常见语言的绘图接口非常�
 
 1. 波形图
 
-   ![波形图](img/wave.gif)
+   ![wave](img/wave.png)
 
 2. 频率分布直方图
 
-   ![频率分布直方图](img/frequency.gif)
+   ![frequency](img/frequency.png)
