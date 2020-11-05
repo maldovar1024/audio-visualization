@@ -1,14 +1,12 @@
-const CracoLessPlugin = require('craco-less');
+const CracoAntDesignPlugin = require('craco-antd');
 
 module.exports = {
   plugins: [
     {
-      plugin: CracoLessPlugin,
+      plugin: CracoAntDesignPlugin,
       options: {
-        lessLoaderOptions: {
-          lessOptions: {
-            javascriptEnabled: true,
-          },
+        babelPluginImportOptions: {
+          libraryDirectory: 'es',
         },
       },
     },
