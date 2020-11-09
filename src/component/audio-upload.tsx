@@ -10,22 +10,19 @@ interface AudioUploadProps {
 }
 
 const AudioUpload: FC<AudioUploadProps> = props => {
-  const [loading, setLoading] = useState(false);
   const [filename, setFilename] = useState('');
 
-  const disabled = props.disabled || loading;
+  const disabled = props.disabled;
 
   const handleUpload = (file: RcFile) => {
     if (!file.type.startsWith('audio/')) {
       message.error('文件类型错误', 1);
-      setLoading(false);
     } else {
       setFilename(file.name);
       const reader = new FileReader();
       reader.onload = () => {
         const buffer = reader.result as ArrayBuffer;
         props.readAudioData(buffer);
-        setLoading(false);
       };
       reader.readAsArrayBuffer(file);
     }
@@ -44,8 +41,6 @@ const AudioUpload: FC<AudioUploadProps> = props => {
           style={{ paddingLeft: 6, paddingRight: 6 }}
           icon={<UploadOutlined />}
           disabled={disabled}
-          onClick={() => setLoading(true)}
-          loading={loading}
         >
           上传音频文件
         </Button>
