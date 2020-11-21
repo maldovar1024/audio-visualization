@@ -6,7 +6,7 @@
 .
 ├── build // 打包后的文件
 ├── public // 静态文件
-│   ├── favicon.ico // 图标，来自 Redux
+│   ├── favicon.ico // 图标
 │   └── index.html // HTML 模板
 ├── src // 源码主体
 │   ├── app.tsx // 页面总体组件，包括音频处理逻辑
